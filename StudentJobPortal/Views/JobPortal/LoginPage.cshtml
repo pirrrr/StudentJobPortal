@@ -1,0 +1,490 @@
+﻿@{
+    Layout = "~/Views/Shared/_JobPortalLayout.cshtml";
+}
+
+<style>
+    :root {
+        --primary-color: #fda837;
+        --secondary-color: #fff6e6;
+        --text-color: #333;
+        --border-radius: 12px;
+        --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        --transition: all 0.3s ease;
+    }
+
+    body {
+        background: linear-gradient(135deg, var(--secondary-color) 0%, #fff 100%);
+        font-family: 'Inter', Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .login-container {
+        width: 100%;
+        max-width: 420px;
+        background-color: white;
+        padding: 40px;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .login-left {
+        flex: 1;
+        text-align: left;
+        padding-right: 40px;
+    }
+
+    .login-right {
+        flex: 1;
+        text-align: left;
+    }
+
+    .login-header {
+        margin-bottom: 0;
+    }
+
+        .login-header h2 {
+            color: var(--text-color);
+            font-size: 38px;
+            font-weight: 700;
+            margin: 0 0 18px;
+            letter-spacing: -0.5px;
+        }
+
+        .login-header p {
+            color: #666;
+            margin: 0;
+            font-size: 18px;
+            line-height: 1.5;
+        }
+
+    .form-group {
+        margin-bottom: 32px;
+        text-align: left;
+    }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 14px;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+    .input-group {
+        position: relative;
+    }
+
+        .input-group i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            font-size: 22px;
+            transition: var(--transition);
+        }
+
+    input[type="text"],
+    input[type="password"] {
+        width: 100%;
+        padding: 18px 15px 18px 50px;
+        border: 2px solid #e0e0e0;
+        border-radius: var(--border-radius);
+        font-size: 17px;
+        transition: var(--transition);
+        box-sizing: border-box;
+        background-color: white;
+    }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(253, 168, 55, 0.15);
+        }
+
+            input[type="text"]:focus + i,
+            input[type="password"]:focus + i {
+                color: var(--primary-color);
+            }
+
+    .remember-forgot {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+    .remember-me {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+        .remember-me input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-color);
+            cursor: pointer;
+        }
+
+    .forgot-password {
+        color: var(--primary-color);
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+        transition: var(--transition);
+    }
+
+        .forgot-password:hover {
+            color: #e89626;
+            text-decoration: underline;
+        }
+
+    button {
+        width: 100%;
+        padding: 18px;
+        font-weight: 600;
+        font-size: 18px;
+        border: none;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .login-btn {
+        background-color: var(--primary-color);
+        color: white;
+        margin-bottom: 16px;
+    }
+
+        .login-btn:hover {
+            background-color: #e89626;
+            transform: translateY(-1px);
+        }
+
+        .login-btn:active {
+            transform: translateY(1px);
+        }
+
+    .signup-btn {
+        background-color: var(--secondary-color);
+        color: var(--primary-color);
+        border: 2px solid var(--primary-color);
+    }
+
+        .signup-btn:hover {
+            background-color: #ffe9cc;
+            transform: translateY(-1px);
+        }
+
+        .signup-btn:active {
+            transform: translateY(1px);
+        }
+
+    .divider {
+        display: flex;
+        align-items: center;
+        margin: 30px 0;
+        color: #666;
+    }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background-color: #e0e0e0;
+        }
+
+        .divider span {
+            padding: 0 15px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+    .social-login {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 25px;
+    }
+
+    .social-btn {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 16px;
+        border: 2px solid #e0e0e0;
+        border-radius: var(--border-radius);
+        background-color: white;
+        color: var(--text-color);
+        transition: var(--transition);
+        font-weight: 500;
+        font-size: 17px;
+    }
+
+        .social-btn:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--primary-color);
+            transform: translateY(-1px);
+        }
+
+        .social-btn:active {
+            transform: translateY(1px);
+        }
+
+        .social-btn img {
+            width: 24px;
+            height: 24px;
+        }
+
+    /* Loading state */
+    .loading {
+        position: relative;
+        pointer-events: none;
+    }
+
+        .loading::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            margin: -10px 0 0 -10px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+    @@keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    /* Error state */
+    .error-message {
+        color: #dc3545;
+        font-size: 14px;
+        margin-top: 5px;
+        display: none;
+    }
+
+    .input-error {
+        border-color: #dc3545 !important;
+    }
+
+        .input-error:focus {
+            box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.15) !important;
+        }
+
+    /* Responsive Design */
+    /* Large devices (desktops, 1200px and up) */
+    @@media (min-width: 1200px) {
+        .login-container {
+            max-width: 1200px;
+            padding: 60px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .login-left {
+            flex: 1;
+            text-align: left;
+            padding-right: 40px;
+        }
+
+        .login-right {
+            flex: 1;
+            text-align: left;
+        }
+
+        .login-header {
+            margin-bottom: 0;
+        }
+
+            .login-header h2 {
+                font-size: 42px;
+                margin-bottom: 20px;
+            }
+
+            .login-header p {
+                font-size: 20px;
+                line-height: 1.6;
+            }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+            .form-group label {
+                font-size: 16px;
+                margin-bottom: 10px;
+            }
+
+        input[type="text"],
+        input[type="password"] {
+            padding: 16px 15px 16px 48px;
+            font-size: 16px;
+        }
+
+        .social-login {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-btn {
+            flex: 1;
+        }
+    }
+
+    /* Medium devices (tablets, 768px to 1199px) */
+    @@media (min-width: 768px) and (max-width: 1199px) {
+        .login-container {
+            max-width: 420px;
+            padding: 40px;
+        }
+    }
+
+    /* Small devices (landscape phones, 576px to 767px) */
+    @@media (min-width: 576px) and (max-width: 767px) {
+        .login-container {
+            max-width: 420px;
+            padding: 35px;
+        }
+    }
+
+    /* Extra small devices (portrait phones, less than 576px) */
+    @@media (max-width: 575px) {
+        .login-container {
+            padding: 30px 25px;
+        }
+    }
+
+    /* Handle very small devices */
+    @@media (max-width: 360px) {
+        .login-container {
+            padding: 30px 25px;
+        }
+
+        .login-header h2 {
+            font-size: 26px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            padding: 14px 15px 14px 42px;
+            font-size: 14px;
+        }
+
+        .input-group i {
+            font-size: 20px;
+            left: 18px;
+        }
+    }
+</style>
+
+<div class="login-container">
+    <div class="login-left">
+        <div class="login-header">
+            <h2>Welcome Back!</h2>
+            <p>Please login to your account</p>
+        </div>
+    </div>
+
+    <div class="divider">
+    </div>
+
+    <div class="login-right">
+        <form method="post" id="loginForm">
+            <div class="form-group">
+                <label for="emailAddress">Email Address</label>
+                <div class="input-group">
+                    <input type="text" id="emailAddress" name="emailAddress" placeholder="Enter your email address" required>
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="error-message" id="emailError">Please enter a valid email address</div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-group">
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div class="error-message" id="passwordError">Password is required</div>
+            </div>
+
+            <div class="remember-forgot">
+                <label class="remember-me">
+                    <input type="checkbox" name="rememberMe">
+                    <span>Remember me</span>
+                </label>
+                <a href="#" class="forgot-password">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="login-btn" id="loginButton">Login</button>
+        </form>
+
+        <div class="divider">
+        </div>
+
+
+        <form method="get">
+            <button type="submit" class="signup-btn">Create New Account</button>
+        </form>
+    </div>
+</div>
+
+@*<script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('emailAddress');
+            const password = document.getElementById('password');
+            const loginButton = document.getElementById('loginButton');
+            let isValid = true;
+
+            // Reset error states
+            document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+
+            // Validate email
+            if (!email.value || !email.value.includes('@@')) {
+                document.getElementById('emailError').style.display = 'block';
+                email.classList.add('input-error');
+                isValid = false;
+            }
+
+            // Validate password
+            if (!password.value) {
+                document.getElementById('passwordError').style.display = 'block';
+                password.classList.add('input-error');
+                isValid = false;
+            }
+
+            if (isValid) {
+                loginButton.classList.add('loading');
+                loginButton.textContent = '';
+                // Simulate API call
+                setTimeout(() => {
+                    this.submit();
+                }, 1000);
+            }
+        });
+    </script>*@

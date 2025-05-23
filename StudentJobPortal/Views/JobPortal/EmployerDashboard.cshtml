@@ -1,0 +1,1152 @@
+﻿@{
+    Layout = "~/Views/Shared/_JobPortalLayout.cshtml";
+}
+
+<style>
+    :root {
+        --primary-color: #fda837;
+        --primary-hover: #e89626;
+        --secondary-color: #fff6e6;
+        --text-color: #333;
+        --text-light: #666;
+        --border-radius: 12px;
+        --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        --transition: all 0.3s ease;
+    }
+
+    .dashboard-container {
+        padding: 2rem;
+        width: 100%;
+        min-height: 100vh;
+        background: linear-gradient(135deg, var(--secondary-color) 0%, #fff 100%);
+    }
+
+    .content-wrapper {
+        max-width: 2000px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .welcome-section {
+        background: linear-gradient(90deg, var(--primary-color) 60%, #ffcb7e 100%);
+        padding: 3rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        color: white;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: 200px;
+    }
+
+        .welcome-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
+        }
+
+        .welcome-section h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-section p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            position: relative;
+            z-index: 1;
+        }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem;
+    }
+
+    .stat-card {
+        background-color: white;
+        padding: 2rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        text-align: left;
+        transition: var(--transition);
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 24px rgba(253,168,55,0.18);
+            background: var(--secondary-color);
+        }
+
+        .stat-card h3 {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .stat-card p {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+    .action-buttons {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.25rem;
+    }
+
+    .action-button {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 1.25rem;
+        border: none;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        font-weight: 600;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        box-shadow: 0 2px 8px rgba(253,168,55,0.2);
+    }
+
+        .action-button:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(253,168,55,0.3);
+        }
+
+        .action-button i {
+            font-size: 1.2rem;
+        }
+
+    .job-posts {
+        background-color: white;
+        padding: 2.5rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+    }
+
+        .job-posts h2 {
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            font-size: 1.7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+    .job-list {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+
+    .job-card {
+        background-color: white;
+        border: 1px solid #e0e0e0;
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        transition: var(--transition);
+        cursor: pointer;
+    }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 24px rgba(253,168,55,0.18);
+            border-color: var(--primary-color);
+        }
+
+        .job-card h3 {
+            color: var(--text-color);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .job-card .company {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+    .job-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+
+        .job-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .job-meta i {
+            color: var(--primary-color);
+        }
+
+    .job-status {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+
+    .status-active {
+        background-color: #d1e7dd;
+        color: #0f5132;
+    }
+
+    .status-draft {
+        background-color: #fff3cd;
+        color: #856404;
+    }
+
+    .status-closed {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    .recent-activity {
+        background-color: white;
+        padding: 2.5rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+    }
+
+        .recent-activity h2 {
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            font-size: 1.7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+    .activity-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .activity-item {
+        padding: 1.25rem;
+        border-bottom: 1px solid #e0e0e0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: var(--transition);
+    }
+
+        .activity-item:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-item .date {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            background-color: var(--secondary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+    @@media (max-width: 1200px) {
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .job-list {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .dashboard-container {
+            padding: 1.5rem;
+        }
+
+        .welcome-section {
+            padding: 2rem;
+        }
+
+            .welcome-section h1 {
+                font-size: 2rem;
+            }
+
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .action-buttons {
+            grid-template-columns: 1fr;
+        }
+
+        .job-list {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Modal Styles */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        overflow-y: auto;
+    }
+
+    .modal-content {
+        background-color: white;
+        margin: 50px auto;
+        padding: 2rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        max-width: 800px;
+        width: 90%;
+        position: relative;
+    }
+
+    .modal-header {
+        margin-bottom: 2rem;
+    }
+
+        .modal-header h2 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin: 0;
+        }
+
+    .close-button {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--text-light);
+        transition: var(--transition);
+    }
+
+        .close-button:hover {
+            color: var(--text-color);
+        }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+            font-weight: 600;
+        }
+
+    .form-control {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: var(--border-radius);
+        font-size: 1rem;
+        transition: var(--transition);
+    }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(253, 168, 55, 0.2);
+        }
+
+    textarea.form-control {
+        min-height: 150px;
+        resize: vertical;
+    }
+
+    .salary-inputs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .modal-footer {
+        margin-top: 2rem;
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+    }
+
+    .btn {
+        padding: 0.75rem 1.5rem;
+        border-radius: var(--border-radius);
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        border: none;
+    }
+
+    .btn-primary {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+    .btn-secondary {
+        background-color: #e0e0e0;
+        color: var(--text-color);
+    }
+
+        .btn-secondary:hover {
+            background-color: #d0d0d0;
+        }
+
+    /* Job Details Modal Styles */
+    .job-details-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        overflow-y: auto;
+    }
+
+    .job-details-content {
+        background-color: white;
+        margin: 50px auto;
+        padding: 2.5rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        max-width: 800px;
+        width: 90%;
+        position: relative;
+    }
+
+    .job-details-header {
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--secondary-color);
+    }
+
+        .job-details-header h2 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin: 0 0 0.5rem 0;
+        }
+
+    .job-details-company {
+        color: var(--text-light);
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+    }
+
+    .job-details-meta {
+        display: flex;
+        gap: 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .job-details-meta-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-light);
+    }
+
+        .job-details-meta-item i {
+            color: var(--primary-color);
+        }
+
+    .job-details-section {
+        margin-bottom: 2rem;
+    }
+
+        .job-details-section h3 {
+            color: var(--text-color);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .job-details-section p {
+            color: var(--text-color);
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+    /* Applications Modal Styles */
+    .applications-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        overflow-y: auto;
+    }
+
+    .applications-content {
+        background-color: white;
+        margin: 50px auto;
+        padding: 2.5rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        max-width: 1200px;
+        width: 90%;
+        position: relative;
+    }
+
+    .applications-header {
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--secondary-color);
+    }
+
+        .applications-header h2 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin: 0;
+        }
+
+    .applications-filters {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .filter-select {
+        padding: 0.5rem 1rem;
+        border: 1px solid #ddd;
+        border-radius: var(--border-radius);
+        background-color: white;
+        color: var(--text-color);
+        min-width: 150px;
+    }
+
+    .applications-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+    }
+
+        .applications-table th {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            font-weight: 600;
+            text-align: left;
+            padding: 1rem;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .applications-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #ddd;
+            color: var(--text-color);
+        }
+
+        .applications-table tr:hover {
+            background-color: var(--secondary-color);
+        }
+
+    .status-badge {
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        display: inline-block;
+    }
+
+    .status-new {
+        background-color: #e3f2fd;
+        color: #1976d2;
+    }
+
+    .status-reviewing {
+        background-color: #fff3e0;
+        color: #f57c00;
+    }
+
+    .status-shortlisted {
+        background-color: #e8f5e9;
+        color: #2e7d32;
+    }
+
+    .status-rejected {
+        background-color: #ffebee;
+        color: #c62828;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .action-btn {
+        padding: 0.5rem;
+        border: none;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        transition: var(--transition);
+        background-color: var(--secondary-color);
+        color: var(--text-color);
+    }
+
+        .action-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+    .view-resume-btn {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        transition: var(--transition);
+    }
+
+        .view-resume-btn:hover {
+            background-color: var(--primary-hover);
+        }
+</style>
+
+<div class="dashboard-container">
+    <div class="content-wrapper">
+        <div class="welcome-section">
+            <h1>Welcome to Your Employer Dashboard</h1>
+            <p>Manage your job postings and find the perfect candidates for your positions.</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Active Job Posts</h3>
+                <p>5</p>
+            </div>
+            <div class="stat-card">
+                <h3>Total Applications</h3>
+                <p>42</p>
+            </div>
+            <div class="stat-card">
+                <h3>Candidates Shortlisted</h3>
+                <p>12</p>
+            </div>
+            <div class="stat-card">
+                <h3>Positions Filled</h3>
+                <p>3</p>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="action-button">
+                <i class="fas fa-plus"></i>
+                Post New Job
+            </button>
+            <button class="action-button">
+                <i class="fas fa-file-alt"></i>
+                View Applications
+            </button>
+            <button class="action-button">
+                <i class="fas fa-building"></i>
+                Company Profile
+            </button>
+        </div>
+
+        <div class="job-posts">
+            <h2>Your Job Posts</h2>
+            <div class="job-list">
+                <div class="job-card">
+                    <h3>Senior Software Developer</h3>
+                    <p class="company">Tech Solutions Inc.</p>
+                    <div class="job-meta">
+                        <span><i class="fas fa-map-marker-alt"></i>Makati</span>
+                        <span><i class="fas fa-money-bill-wave"></i> $90k - $120k</span>
+                        <span><i class="fas fa-clock"></i> Full-time</span>
+                    </div>
+                    <span class="job-status status-active">Active</span>
+                </div>
+                <div class="job-card">
+                    <h3>UX/UI Designer</h3>
+                    <p class="company">Tech Solutions Inc.</p>
+                    <div class="job-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> Remote</span>
+                        <span><i class="fas fa-money-bill-wave"></i> $70k - $90k</span>
+                        <span><i class="fas fa-clock"></i> Full-time</span>
+                    </div>
+                    <span class="job-status status-active">Active</span>
+                </div>
+                <div class="job-card">
+                    <h3>Marketing Specialist</h3>
+                    <p class="company">Tech Solutions Inc.</p>
+                    <div class="job-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> Quezon City</span>
+                        <span><i class="fas fa-money-bill-wave"></i> $60k - $80k</span>
+                        <span><i class="fas fa-clock"></i> Full-time</span>
+                    </div>
+                    <span class="job-status status-draft">Draft</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="recent-activity">
+            <h2>Recent Activity</h2>
+            <ul class="activity-list">
+                <li class="activity-item">
+                    <span>New application received for Senior Developer position</span>
+                    <span class="date">2 hours ago</span>
+                </li>
+                <li class="activity-item">
+                    <span>Updated job posting for Marketing Manager</span>
+                    <span class="date">5 hours ago</span>
+                </li>
+                <li class="activity-item">
+                    <span>Candidate accepted interview invitation</span>
+                    <span class="date">1 day ago</span>
+                </li>
+                <li class="activity-item">
+                    <span>New job posting published</span>
+                    <span class="date">2 days ago</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Add this before the closing body tag -->
+<div id="postJobModal" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <div class="modal-header">
+            <h2>Post a New Job</h2>
+        </div>
+        <form id="postJobForm">
+            <div class="form-group">
+                <label for="jobTitle">Job Title</label>
+                <input type="text" id="jobTitle" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="company">Company</label>
+                <input type="text" id="company" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="jobDescription">Job Description</label>
+                <textarea id="jobDescription" class="form-control" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="jobRequirements">Job Requirements</label>
+                <textarea id="jobRequirements" class="form-control" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="jobLocation">Job Location</label>
+                <input type="text" id="jobLocation" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Salary Range</label>
+                <div class="salary-inputs">
+                    <div>
+                        <label for="minSalary">Minimum Salary</label>
+                        <input type="number" id="minSalary" class="form-control" required>
+                    </div>
+                    <div>
+                        <label for="maxSalary">Maximum Salary</label>
+                        <input type="number" id="maxSalary" class="form-control" required>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                <button type="submit" class="btn btn-primary">Post Job</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Add this before the closing body tag, after the post job modal -->
+<div id="jobDetailsModal" class="job-details-modal">
+    <div class="job-details-content">
+        <span class="close-button">&times;</span>
+        <div class="job-details-header">
+            <h2 id="modalJobTitle"></h2>
+            <p class="job-details-company" id="modalCompany"></p>
+            <div class="job-details-meta">
+                <div class="job-details-meta-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span id="modalLocation"></span>
+                </div>
+                <div class="job-details-meta-item">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span id="modalSalary"></span>
+                </div>
+                <div class="job-details-meta-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Full-time</span>
+                </div>
+            </div>
+        </div>
+        <div class="job-details-section">
+            <h3>Job Description</h3>
+            <p id="modalDescription"></p>
+        </div>
+        <div class="job-details-section">
+            <h3>Job Requirements</h3>
+            <p id="modalRequirements"></p>
+        </div>
+    </div>
+</div>
+
+<!-- Add this before the closing body tag, after the job details modal -->
+<div id="applicationsModal" class="applications-modal">
+    <div class="applications-content">
+        <span class="close-button">&times;</span>
+        <div class="applications-header">
+            <h2>Job Applications</h2>
+        </div>
+        <div class="applications-filters">
+            <select class="filter-select" id="jobFilter">
+                <option value="">All Jobs</option>
+                <option value="Senior Software Developer">Senior Software Developer</option>
+                <option value="UX/UI Designer">UX/UI Designer</option>
+                <option value="Marketing Specialist">Marketing Specialist</option>
+            </select>
+            <select class="filter-select" id="statusFilter">
+                <option value="">All Status</option>
+                <option value="new">New</option>
+                <option value="reviewing">Reviewing</option>
+                <option value="shortlisted">Shortlisted</option>
+                <option value="rejected">Rejected</option>
+            </select>
+        </div>
+        <table class="applications-table">
+            <thead>
+                <tr>
+                    <th>Applicant Name</th>
+                    <th>Job Title</th>
+                    <th>Applied Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="applicationsTableBody">
+                <!-- Table content will be populated by JavaScript -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>// Get the modal
+    const modal = document.getElementById('postJobModal');
+    const postJobButton = document.querySelector('.action-button:first-child');
+    const closeButton = document.querySelector('.close-button');
+    const postJobForm = document.getElementById('postJobForm');
+
+    // Open modal when clicking the "Post New Job" button
+    postJobButton.addEventListener('click', () => {
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    });
+
+    // Close modal when clicking the close button
+    closeButton.addEventListener('click', closeModal);
+
+    // Close modal when clicking outside the modal content
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            closeModal();
+        }
+    });
+
+    // Close modal function
+    function closeModal() {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto'; // Re-enable background scrolling
+    }
+
+    // Handle form submission
+    postJobForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        // Collect form data
+        const formData = {
+            jobTitle: document.getElementById('jobTitle').value,
+            company: document.getElementById('company').value,
+            jobDescription: document.getElementById('jobDescription').value,
+            jobRequirements: document.getElementById('jobRequirements').value,
+            jobLocation: document.getElementById('jobLocation').value,
+            minSalary: document.getElementById('minSalary').value,
+            maxSalary: document.getElementById('maxSalary').value
+        };
+
+        // Here you would typically send the data to your server
+        console.log('Form submitted:', formData);
+
+        // Close the modal after submission
+        closeModal();
+
+        // Reset the form
+        postJobForm.reset();
+    });
+
+    // Add this to your existing script
+    const jobDetailsModal = document.getElementById('jobDetailsModal');
+    const jobCards = document.querySelectorAll('.job-card');
+    const closeJobDetailsButton = jobDetailsModal.querySelector('.close-button');
+
+    // Sample job data (replace this with your actual data from the server)
+    const jobData = {
+        'Senior Software Developer': {
+            company: 'Tech Solutions Inc.',
+            location: 'Makati',
+            minSalary: 90000,
+            maxSalary: 120000,
+            description: 'We are looking for a Senior Software Developer to join our team. The ideal candidate will be responsible for developing and maintaining high-quality software solutions.\n\nResponsibilities:\n- Design and implement software solutions\n- Collaborate with cross-functional teams\n- Mentor junior developers\n- Write clean, maintainable code\n- Participate in code reviews',
+            requirements: 'Requirements:\n- 5+ years of experience in software development\n- Strong knowledge of modern programming languages\n- Experience with cloud platforms\n- Excellent problem-solving skills\n- Strong communication abilities'
+        },
+        'UX/UI Designer': {
+            company: 'Tech Solutions Inc.',
+            location: 'Remote',
+            minSalary: 70000,
+            maxSalary: 90000,
+            description: 'We are seeking a talented UX/UI Designer to create beautiful and functional user interfaces.\n\nResponsibilities:\n- Create user-centered designs\n- Develop wireframes and prototypes\n- Conduct user research\n- Collaborate with development team\n- Maintain design consistency',
+            requirements: 'Requirements:\n- 3+ years of UX/UI design experience\n- Proficiency in design tools\n- Strong portfolio\n- Understanding of user-centered design\n- Experience with responsive design'
+        },
+        'Marketing Specialist': {
+            company: 'Tech Solutions Inc.',
+            location: 'Quezon City',
+            minSalary: 60000,
+            maxSalary: 80000,
+            description: 'Join our marketing team as a Marketing Specialist to help drive our company\'s growth.\n\nResponsibilities:\n- Develop marketing strategies\n- Create engaging content\n- Manage social media presence\n- Analyze marketing metrics\n- Coordinate with external vendors',
+            requirements: 'Requirements:\n- 2+ years of marketing experience\n- Strong writing skills\n- Social media expertise\n- Analytical mindset\n- Project management skills'
+        }
+    };
+
+    // Add click event listeners to job cards
+    jobCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const jobTitle = card.querySelector('h3').textContent;
+            const jobInfo = jobData[jobTitle];
+
+            if (jobInfo) {
+                // Update modal content
+                document.getElementById('modalJobTitle').textContent = jobTitle;
+                document.getElementById('modalCompany').textContent = jobInfo.company;
+                document.getElementById('modalLocation').textContent = jobInfo.location;
+                document.getElementById('modalSalary').textContent = `$${jobInfo.minSalary.toLocaleString()} - $${jobInfo.maxSalary.toLocaleString()}`;
+                document.getElementById('modalDescription').textContent = jobInfo.description;
+                document.getElementById('modalRequirements').textContent = jobInfo.requirements;
+
+                // Show modal
+                jobDetailsModal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
+        });
+    });
+
+    // Close job details modal
+    closeJobDetailsButton.addEventListener('click', () => {
+        jobDetailsModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    });
+
+    // Close job details modal when clicking outside
+    window.addEventListener('click', (event) => {
+        if (event.target === jobDetailsModal) {
+            jobDetailsModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    // Add this to your existing script
+    const applicationsModal = document.getElementById('applicationsModal');
+    const viewApplicationsButton = document.querySelector('.action-button:nth-child(2)');
+    const closeApplicationsButton = applicationsModal.querySelector('.close-button');
+    const applicationsTableBody = document.getElementById('applicationsTableBody');
+    const jobFilter = document.getElementById('jobFilter');
+    const statusFilter = document.getElementById('statusFilter');
+
+    // Sample applications data (replace with your actual data from the server)
+    const applicationsData = [
+        {
+            id: 1,
+            applicantName: "John Doe",
+            jobTitle: "Senior Software Developer",
+            appliedDate: "2024-03-15",
+            status: "new",
+            resumeUrl: "#"
+        },
+        {
+            id: 2,
+            applicantName: "Jane Smith",
+            jobTitle: "UX/UI Designer",
+            appliedDate: "2024-03-14",
+            status: "reviewing",
+            resumeUrl: "#"
+        },
+        {
+            id: 3,
+            applicantName: "Mike Johnson",
+            jobTitle: "Marketing Specialist",
+            appliedDate: "2024-03-13",
+            status: "shortlisted",
+            resumeUrl: "#"
+        },
+        {
+            id: 4,
+            applicantName: "Sarah Williams",
+            jobTitle: "Senior Software Developer",
+            appliedDate: "2024-03-12",
+            status: "rejected",
+            resumeUrl: "#"
+        }
+    ];
+
+    // Function to format date
+    function formatDate(dateString) {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString(undefined, options);
+    }
+
+    // Function to get status badge class
+    function getStatusBadgeClass(status) {
+        const statusClasses = {
+            new: 'status-new',
+            reviewing: 'status-reviewing',
+            shortlisted: 'status-shortlisted',
+            rejected: 'status-rejected'
+        };
+        return statusClasses[status] || '';
+    }
+
+    // Function to get status display text
+    function getStatusDisplayText(status) {
+        const statusTexts = {
+            new: 'New',
+            reviewing: 'Reviewing',
+            shortlisted: 'Shortlisted',
+            rejected: 'Rejected'
+        };
+        return statusTexts[status] || status;
+    }
+
+    // Function to render applications
+    function renderApplications(filteredData) {
+        applicationsTableBody.innerHTML = '';
+
+        filteredData.forEach(application => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${application.applicantName}</td>
+                <td>${application.jobTitle}</td>
+                <td>${formatDate(application.appliedDate)}</td>
+                <td><span class="status-badge ${getStatusBadgeClass(application.status)}">${getStatusDisplayText(application.status)}</span></td>
+                <td>
+                    <div class="action-buttons">
+                        <button class="view-resume-btn" onclick="viewResume('${application.resumeUrl}')">View Resume</button>
+                        <button class="action-btn" onclick="updateStatus(${application.id}, 'reviewing')" title="Mark as Reviewing">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="action-btn" onclick="updateStatus(${application.id}, 'shortlisted')" title="Shortlist">
+                            <i class="fas fa-check"></i>
+                        </button>
+                        <button class="action-btn" onclick="updateStatus(${application.id}, 'rejected')" title="Reject">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </td>
+            `;
+            applicationsTableBody.appendChild(row);
+        });
+    }
+
+    // Function to filter applications
+    function filterApplications() {
+        const selectedJob = jobFilter.value;
+        const selectedStatus = statusFilter.value;
+
+        let filteredData = applicationsData;
+
+        if (selectedJob) {
+            filteredData = filteredData.filter(app => app.jobTitle === selectedJob);
+        }
+
+        if (selectedStatus) {
+            filteredData = filteredData.filter(app => app.status === selectedStatus);
+        }
+
+        renderApplications(filteredData);
+    }
+
+    // Event listeners for filters
+    jobFilter.addEventListener('change', filterApplications);
+    statusFilter.addEventListener('change', filterApplications);
+
+    // Open applications modal
+    viewApplicationsButton.addEventListener('click', () => {
+        applicationsModal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        renderApplications(applicationsData);
+    });
+
+    // Close applications modal
+    closeApplicationsButton.addEventListener('click', () => {
+        applicationsModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    });
+
+    // Close applications modal when clicking outside
+    window.addEventListener('click', (event) => {
+        if (event.target === applicationsModal) {
+            applicationsModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    // Placeholder functions for actions
+    function viewResume(url) {
+        // Implement resume viewing functionality
+        console.log('Viewing resume:', url);
+    }
+
+    function updateStatus(applicationId, newStatus) {
+        // Implement status update functionality
+        console.log('Updating status for application:', applicationId, 'to:', newStatus);
+        // Update the data and re-render
+        const application = applicationsData.find(app => app.id === applicationId);
+        if (application) {
+            application.status = newStatus;
+            filterApplications();
+        }
+    }</script> 
