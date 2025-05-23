@@ -311,7 +311,7 @@
         <div ng-show="selectedRole === 'Employer'" class="form-group">
             <label for="company">Company Name</label>
             <div class="input-group">
-                <input type="text" id="company" name="company" placeholder="Company Name" required maxlength="20" ng-model="company">
+                <input type="text" id="company" name="company" placeholder="Company Name" required maxlength="20" ng-model="companyName">
             </div>
         </div>
 
@@ -356,7 +356,7 @@
             </div>
         </div>
 
-        <button type="submit" class="signup-btn" ng-click="Register()">Create Account</button>
+        <button type="submit" class="signup-btn" ng-click="register()">Create Account</button>
 
         <div class="terms">
             By creating an account, you agree to our
@@ -371,20 +371,20 @@
 </div>
 
 <script>
-function togglePassword(inputId) {
-    const input = document.getElementById(inputId);
-    const icon = input.nextElementSibling.querySelector('i');
+    function togglePassword(inputId) {
+        const input = document.getElementById(inputId);
+        const icon = input.nextElementSibling.querySelector('i');
 
-    if (input.type === 'password') {
-        input.type = 'text';
-        icon.classList.remove('fa-eye');
-        icon.classList.add('fa-eye-slash');
-    } else {
-        input.type = 'password';
-        icon.classList.remove('fa-eye-slash');
-        icon.classList.add('fa-eye');
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            input.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
     }
-}
 </script>
 
 

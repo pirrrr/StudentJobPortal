@@ -14,7 +14,7 @@ namespace StudentJobPortal.Models
 		{
 			Database.SetInitializer<JobPortalContext>(null);
 		}
-		public JobPortalContext() : base("Name=jobportaldb") { }
+		public JobPortalContext() : base("name=jobportaldb") { }
 
 		public virtual DbSet<tblUsersModel> tbl_users { get; set; }
         public virtual DbSet<tblStudentsModel> tbl_students { get; set; }

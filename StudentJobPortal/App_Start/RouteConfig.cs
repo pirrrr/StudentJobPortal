@@ -16,7 +16,7 @@ namespace StudentJobPortal
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "JobPortal", action = "RegisterPage", id = UrlParameter.Optional }
+                defaults: new { controller = "JobPortal", action = "Register", id = UrlParameter.Optional }
             );
         }
     }

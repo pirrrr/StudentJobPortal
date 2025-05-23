@@ -8,6 +8,6 @@ namespace StudentJobPortal.Models
     public class tblStudentsModel
     {
         public int userID { get; set; }
-        public String programID { get; set; }
+        public int programID { get; set; }
     }
 }

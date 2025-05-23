@@ -29,7 +29,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
+    <DebugType>pdbonly</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -188,6 +188,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\JobPortalContext.cs" />
+    <Compile Include="Models\RegistrationModel.cs" />
     <Compile Include="Models\tblApplicationsMap.cs" />
     <Compile Include="Models\tblApplicationsModel.cs" />
     <Compile Include="Models\tblApplicationStatusesMap.cs" />
@@ -1058,7 +1059,7 @@
     <Content Include="Views\Shared\_JobPortalLayout.cshtml" />
     <Content Include="Views\JobPortal\EmployerDashboard.cshtml" />
     <Content Include="Views\JobPortal\LoginPage.cshtml" />
-    <Content Include="Views\JobPortal\RegisterPage.cshtml" />
+    <Content Include="Views\JobPortal\Register.cshtml" />
     <Content Include="Views\JobPortal\StudentDashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
